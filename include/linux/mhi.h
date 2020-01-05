@@ -263,6 +263,8 @@ struct mhi_controller_config {
  * @dev: Driver model device node for the controller (required)
  * @mhi_dev: MHI device instance for the controller
  * @regs: Base address of MHI MMIO register space (required)
+ * @bhi: Points to base of MHI BHI register space
+ * @wake_db: MHI WAKE doorbell register address
  * @iova_start: IOMMU starting address for data (required)
  * @iova_stop: IOMMU stop address for data (required)
  * @fw_image: Firmware image name for normal booting (required)
@@ -312,6 +314,8 @@ struct mhi_controller {
 	struct device *dev;
 	struct mhi_device *mhi_dev;
 	void __iomem *regs;
+	void __iomem *bhi;
+	void __iomem *wake_db;
 	dma_addr_t iova_start;
 	dma_addr_t iova_stop;
 	const char *fw_image;
@@ -373,6 +377,8 @@ struct mhi_controller {
  * @dl_chan: DL channel for the device
  * @dev: Driver model device node for the MHI device
  * @dev_type: MHI device type
+ * @ul_chan_id: MHI channel id for UL transfer
+ * @dl_chan_id: MHI channel id for DL transfer
  * @tiocm: Device current terminal settings
  * @dev_wake: Device wakeup counter
  */
@@ -384,6 +390,8 @@ struct mhi_device {
 	struct mhi_chan *dl_chan;
 	struct device dev;
 	enum mhi_device_type dev_type;
+	int ul_chan_id;
+	int dl_chan_id;
 	u32 tiocm;
 	u32 dev_wake;
 };
